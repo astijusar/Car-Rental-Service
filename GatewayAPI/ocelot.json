@@ -1,0 +1,32 @@
+{
+  "GlobalConfiguration": {
+    "Host": "gatewayapi",
+    "Port": 80
+  },
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/gateway/authentication",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/Authentication",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "identityapi",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/authentication/authenticate",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/Authentication/authenticate",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "identityapi",
+          "Port": 80
+        }
+      ]
+    }
+  ]
+}
