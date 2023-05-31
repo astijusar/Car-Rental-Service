@@ -8,3 +8,15 @@ services:
       dockerfile: IdentityAPI/Dockerfile
     ports:
       - "5001:443"
+    depends_on:
+      - sqlserver
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=/Password123
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./sqlserver-data:/var/opt/mssql/data
