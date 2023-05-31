@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  identityapi:
+    image: ${DOCKER_REGISTRY-}identityapi
+    build:
+      context: .
+      dockerfile: IdentityAPI/Dockerfile
+    ports:
+      - "5001:443"
