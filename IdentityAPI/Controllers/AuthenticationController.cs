@@ -41,7 +41,7 @@ namespace IdentityAPI.Controllers
             var user = _mapper.Map<User>(userForRegistration);
             user.UserName = userForRegistration.Email;
 
-            var result = await _userManager.CreateAsync(user, userForRegistration.Passowrd);
+            var result = await _userManager.CreateAsync(user, userForRegistration.Password);
 
             if (!result.Succeeded)
             {

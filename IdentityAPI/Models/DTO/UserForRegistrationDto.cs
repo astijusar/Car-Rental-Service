@@ -17,6 +17,6 @@ namespace IdentityAPI.Models.DTO
 
 
         [Required(ErrorMessage = "Password is required")]
-        public string Passowrd { get; set; } = null!;
+        public string Password { get; set; } = null!;
     }
 }

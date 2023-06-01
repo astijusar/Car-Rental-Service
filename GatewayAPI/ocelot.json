@@ -38,7 +38,8 @@
           "Host": "vehiclecatalogapi",
           "Port": 80
         }
-      ]
+      ],
+      "AuthenticationOptions": {"AuthenticationProviderKey": "Bearer"}
     }
   ]
 }

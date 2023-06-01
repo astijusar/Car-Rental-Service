@@ -6,8 +6,13 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
+
 COPY ["VehicleCatalogAPI/VehicleCatalogAPI.csproj", "VehicleCatalogAPI/"]
 RUN dotnet restore "VehicleCatalogAPI/VehicleCatalogAPI.csproj"
+
+COPY ["JWT/JWT.csproj", "JWT/"]
+RUN dotnet restore "JWT/JWT.csproj"
+
 COPY . .
 WORKDIR "/src/VehicleCatalogAPI"
 RUN dotnet build "VehicleCatalogAPI.csproj" -c Release -o /app/build

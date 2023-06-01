@@ -42,8 +42,8 @@ services:
       - SA_PASSWORD=/Password123
     ports:
       - "1433:1433"
-    volumes:
-      - ./sqlserver-data:/var/opt/mssql/data
+    #volumes:
+      #- ./sqlserver-data:/var/opt/mssql/data
 
   seq:
     image: datalust/seq:latest
@@ -52,5 +52,5 @@ services:
     ports:
       - "4999:80"
 
-volumes:
-  sqlserver-data:
+#volumes:
+  #sqlserver-data:
