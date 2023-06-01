@@ -7,9 +7,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
+
 COPY ["IdentityAPI/IdentityAPI.csproj", "IdentityAPI/"]
-COPY ["JWT/bin/Debug/net6.0/JWT.dll", "app/JWT"]
 RUN dotnet restore "IdentityAPI/IdentityAPI.csproj"
+
+COPY ["JWT/JWT.csproj", "JWT/"]
+RUN dotnet restore "JWT/JWT.csproj"
+
 COPY . .
 WORKDIR "/src/IdentityAPI"
 RUN dotnet build "IdentityAPI.csproj" -c Release -o /app/build
