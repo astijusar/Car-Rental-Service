@@ -17,21 +17,6 @@
       ]
     },
     {
-      "UpstreamPathTemplate": "/gateway/authentication",
-      "UpstreamHttpMethod": [ "Get" ],
-      "DownstreamPathTemplate": "/api/Authentication",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "identityapi",
-          "Port": 80
-        }
-      ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer"
-      }
-    },
-    {
       "UpstreamPathTemplate": "/gateway/authentication/authenticate",
       "UpstreamHttpMethod": [ "Post" ],
       "DownstreamPathTemplate": "/api/Authentication/authenticate",

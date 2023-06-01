@@ -11,8 +11,8 @@ WORKDIR /src
 COPY ["GatewayAPI/GatewayAPI.csproj", "GatewayAPI/"]
 RUN dotnet restore "GatewayAPI/GatewayAPI.csproj"
 
-COPY ["../JWT/JWT.csproj", "../JWT/"]
-RUN dotnet restore "../JWT/JWT.csproj"
+COPY ["JWT/JWT.csproj", "JWT/"]
+RUN dotnet restore "JWT/JWT.csproj"
 
 COPY . .
 WORKDIR "/src/GatewayAPI"
