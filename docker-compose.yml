@@ -11,6 +11,7 @@ services:
     depends_on:
       - identityapi
       - vehiclecatalogapi
+      - seq
 
   identityapi:
     image: ${DOCKER_REGISTRY-}identityapi
@@ -21,6 +22,7 @@ services:
       - "5001:80"
     depends_on:
       - sqlserver
+      - seq
 
   vehiclecatalogapi:
     image: ${DOCKER_REGISTRY-}vehiclecatalogapi
@@ -31,6 +33,7 @@ services:
       - "5002:80"
     depends_on:
       - sqlserver
+      - seq
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -41,3 +44,13 @@ services:
       - "1433:1433"
     volumes:
       - ./sqlserver-data:/var/opt/mssql/data
+
+  seq:
+    image: datalust/seq:latest
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "4999:80"
+
+volumes:
+  sqlserver-data:

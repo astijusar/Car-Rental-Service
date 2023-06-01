@@ -1,16 +1,44 @@
 using JWT;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
 
-builder.Services.AddJwtAuthentication(builder.Configuration);
+Serilog.Debugging.SelfLog.Enable(Console.Error);
 
-var app = builder.Build();
+try
+{
+    Log.Information("Vehicle Catalog API started");
 
-app.UseAuthentication();
-app.UseAuthorization();
+    builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-app.MapControllers();
+    builder.Services.AddControllers();
 
-app.Run();
+    builder.Services.AddJwtAuthentication(builder.Configuration);
+
+    builder.Services.AddLogging(builder =>
+    {
+        builder.ClearProviders();
+        builder.AddSerilog(dispose: true);
+    });
+
+    var app = builder.Build();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Vehicle Catalog API terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}

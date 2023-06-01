@@ -9,64 +9,90 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using JWT;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+Serilog.Debugging.SelfLog.Enable(Console.Error);
+
+try
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection"));
-});
+    Log.Information("Identity API started");
 
-builder.Services.AddControllers();
+    builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddAutoMapper(typeof(MappingProfile));
-
-builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
-
-var identity = builder.Services.AddIdentityCore<User>(o =>
-{
-    o.Password.RequireDigit = true;
-    o.Password.RequireLowercase = true;
-    o.Password.RequireUppercase = true;
-    o.Password.RequireNonAlphanumeric = true;
-    o.Password.RequiredLength = 6;
-    o.User.RequireUniqueEmail = true;
-});
-
-identity = new IdentityBuilder(identity.UserType, typeof(IdentityRole), identity.Services);
-identity.AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
-
-builder.Services.AddJwtAuthentication(builder.Configuration);
-
-var app = builder.Build();
-
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-
-    var context = services.GetRequiredService<ApplicationDbContext>();
-
-    if (context.Database.GetPendingMigrations().Any())
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
     {
-        context.Database.Migrate();
+        options.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection"));
+    });
+
+    builder.Services.AddControllers();
+
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+
+    builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+    builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
+
+    var identity = builder.Services.AddIdentityCore<User>(o =>
+    {
+        o.Password.RequireDigit = true;
+        o.Password.RequireLowercase = true;
+        o.Password.RequireUppercase = true;
+        o.Password.RequireNonAlphanumeric = true;
+        o.Password.RequiredLength = 6;
+        o.User.RequireUniqueEmail = true;
+    });
+
+    identity = new IdentityBuilder(identity.UserType, typeof(IdentityRole), identity.Services);
+    identity.AddEntityFrameworkStores<ApplicationDbContext>()
+        .AddDefaultTokenProviders();
+
+    builder.Services.AddJwtAuthentication(builder.Configuration);
+
+    builder.Services.AddLogging(builder =>
+    {
+        builder.ClearProviders();
+        builder.AddSerilog(dispose: true);
+    });
+
+    var app = builder.Build();
+
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+
+        var context = services.GetRequiredService<ApplicationDbContext>();
+
+        if (context.Database.GetPendingMigrations().Any())
+        {
+            context.Database.Migrate();
+        }
     }
-}
 
-if (app.Environment.IsDevelopment())
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
+}
+catch (Exception ex)
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    Log.Fatal(ex, "Identity API terminated unexpectedly");
 }
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+finally
+{
+    Log.CloseAndFlush();
+}
