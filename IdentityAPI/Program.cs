@@ -10,6 +10,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using JWT;
 using Serilog;
+using Microsoft.AspNetCore.Mvc;
+using IdentityAPI.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +40,13 @@ try
     builder.Services.AddAutoMapper(typeof(MappingProfile));
 
     builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
+    builder.Services.AddScoped<ValidationFilterAttribute>();
+
+    builder.Services.Configure<ApiBehaviorOptions>(options =>
+    {
+        options.SuppressModelStateInvalidFilter = true;
+    });
+
 
     var identity = builder.Services.AddIdentityCore<User>(o =>
     {

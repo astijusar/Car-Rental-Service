@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IdentityAPI.Filters;
 using IdentityAPI.Models;
 using IdentityAPI.Models.DTO;
 using IdentityAPI.Services;
@@ -25,6 +26,7 @@ namespace IdentityAPI.Controllers
         }
 
         [HttpPost("authenticate")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto user)
         {
             if (!await _authManager.ValidateUser(user))
@@ -36,6 +38,7 @@ namespace IdentityAPI.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDto userForRegistration)
         {
             var user = _mapper.Map<User>(userForRegistration);

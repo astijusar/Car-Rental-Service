@@ -9,9 +9,9 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GatewayAPI", "GatewayAPI\GatewayAPI.csproj", "{B6D9DBB3-6EE5-4EEF-A449-6B193247416A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JWT", "JWT\JWT.csproj", "{40F6042F-25A0-450F-8DC3-515155AC7B29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JWT", "JWT\JWT.csproj", "{40F6042F-25A0-450F-8DC3-515155AC7B29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleCatalogAPI", "VehicleCatalogAPI\VehicleCatalogAPI.csproj", "{E14B7CA2-4E9C-48CC-86D0-1B76CE04B4EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VehicleCatalogAPI", "VehicleCatalogAPI\VehicleCatalogAPI.csproj", "{E14B7CA2-4E9C-48CC-86D0-1B76CE04B4EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
