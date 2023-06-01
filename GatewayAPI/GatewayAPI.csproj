@@ -15,4 +15,8 @@
     <PackageReference Include="Ocelot" Version="18.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\JWT\JWT.csproj" />
+  </ItemGroup>
+
 </Project>

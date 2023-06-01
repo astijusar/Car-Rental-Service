@@ -8,6 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["GatewayAPI/GatewayAPI.csproj", "GatewayAPI/"]
+COPY ["JWT/bin/Debug/net6.0/JWT.dll", "app/JWT"]
 RUN dotnet restore "GatewayAPI/GatewayAPI.csproj"
 COPY . .
 WORKDIR "/src/GatewayAPI"

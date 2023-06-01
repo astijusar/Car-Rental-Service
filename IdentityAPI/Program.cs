@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using JWT;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,26 +42,7 @@ identity = new IdentityBuilder(identity.UserType, typeof(IdentityRole), identity
 identity.AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-
-builder.Services.AddAuthentication(opt =>
-{
-    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(opt =>
-{
-    opt.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = false,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtSettings.GetSection("validIssuer").Value,
-        ValidAudience = jwtSettings.GetSection("validAudience").Value,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SuperSecretKey123"))
-    };
-});
+builder.Services.AddJwtAuthentication(builder.Configuration);
 
 var app = builder.Build();
 
