@@ -55,12 +55,5 @@ namespace IdentityAPI.Controllers
 
             return StatusCode(201);
         }
-
-        [Authorize]
-        [HttpGet]
-        public IActionResult Test()
-        {
-            return Ok();
-        }
     }
 }
