@@ -11,8 +11,8 @@ WORKDIR /src
 COPY ["IdentityAPI/IdentityAPI.csproj", "IdentityAPI/"]
 RUN dotnet restore "IdentityAPI/IdentityAPI.csproj"
 
-COPY ["JWT/JWT.csproj", "JWT/"]
-RUN dotnet restore "JWT/JWT.csproj"
+COPY ["../JWT/JWT.csproj", "../JWT/"]
+RUN dotnet restore "../JWT/JWT.csproj"
 
 COPY . .
 WORKDIR "/src/IdentityAPI"
