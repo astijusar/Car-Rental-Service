@@ -47,7 +47,6 @@ try
         options.SuppressModelStateInvalidFilter = true;
     });
 
-
     var identity = builder.Services.AddIdentityCore<User>(o =>
     {
         o.Password.RequireDigit = true;

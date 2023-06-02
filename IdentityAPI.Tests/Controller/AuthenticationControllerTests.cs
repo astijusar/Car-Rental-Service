@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IdentityAPI.Tests.Controller.Authentication
+namespace IdentityAPI.Tests.Controller
 {
     public class AuthenticationControllerTests
     {
@@ -36,7 +36,7 @@ namespace IdentityAPI.Tests.Controller.Authentication
         public async Task Authenticate_WithValidUser_ReturnsToken()
         {
             // Arrange
-            var userForAuthenticationDto = new UserForAuthenticationDto {};
+            var userForAuthenticationDto = new UserForAuthenticationDto { };
             var token = "fakeToken";
             _authManagerMock.Setup(x => x.ValidateUser(userForAuthenticationDto)).ReturnsAsync(true);
             _authManagerMock.Setup(x => x.CreateToken()).ReturnsAsync(token);
@@ -54,7 +54,7 @@ namespace IdentityAPI.Tests.Controller.Authentication
         public async Task Authenticate_WithInvalidUser_ReturnsUnauthorized()
         {
             // Arrange
-            var userForAuthenticationDto = new UserForAuthenticationDto {};
+            var userForAuthenticationDto = new UserForAuthenticationDto { };
             _authManagerMock.Setup(x => x.ValidateUser(userForAuthenticationDto)).ReturnsAsync(false);
 
             // Act
@@ -68,8 +68,8 @@ namespace IdentityAPI.Tests.Controller.Authentication
         public async Task RegisterUser_WithValidUser_ReturnsCreatedStatusCode()
         {
             // Arrange
-            var userForRegistrationDto = new UserForRegistrationDto {};
-            var user = new User {};
+            var userForRegistrationDto = new UserForRegistrationDto { };
+            var user = new User { };
             var result = IdentityResult.Success;
             _mapperMock.Setup(x => x.Map<User>(userForRegistrationDto)).Returns(user);
             _userManagerMock.Setup(x => x.CreateAsync(user, userForRegistrationDto.Password)).ReturnsAsync(result);
@@ -86,8 +86,8 @@ namespace IdentityAPI.Tests.Controller.Authentication
         public async Task RegisterUser_WithInvalidUser_ReturnsBadRequestWithErrors()
         {
             // Arrange
-            var userForRegistrationDto = new UserForRegistrationDto {};
-            var user = new User {};
+            var userForRegistrationDto = new UserForRegistrationDto { };
+            var user = new User { };
             var erros = new List<IdentityError> { new IdentityError { Code = "code", Description = "description" } };
             var result = IdentityResult.Failed(erros.ToArray());
             _mapperMock.Setup(x => x.Map<User>(userForRegistrationDto)).Returns(user);
