@@ -45,4 +45,4 @@ jobs:
       - name: Build project
         run: dotnet build IdentityAPI.Tests/IdentityAPI.Tests.csproj --configuration Release --no-restore
       - name: Run IdentityAPI unit tests
-        run: dotnet test --logger:xunit --no-build --configuration Release IdentityAPI.Tests/IdentityAPI.Tests.csproj
+        run: dotnet test --no-build --configuration Release IdentityAPI.Tests/IdentityAPI.Tests.csproj
