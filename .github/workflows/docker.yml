@@ -41,8 +41,8 @@ jobs:
         with:
           dotnet-version: '6.x'
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore IdentityAPI.Tests/IdentityAPI.Tests.csproj
       - name: Build project
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build IdentityAPI.Tests/IdentityAPI.Tests.csproj --configuration Release --no-restore
       - name: Run IdentityAPI unit tests
         run: dotnet test --logger:xunit --no-build --configuration Release IdentityAPI.Tests/IdentityAPI.Tests.csproj
