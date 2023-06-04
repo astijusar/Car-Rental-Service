@@ -1,4 +1,6 @@
-﻿using VehicleCatalogAPI.Models.Enums;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations.Schema;
+using VehicleCatalogAPI.Models.Enums;
 
 namespace VehicleCatalogAPI.Models
 {
@@ -16,7 +18,16 @@ namespace VehicleCatalogAPI.Models
         public double Power { get; set; }
         public bool Electric { get; set; }
 
-        public Price Price { get; set; } = null!;
+        [Column(TypeName = "decimal(10, 2)")]
+        public decimal Hour { get; set; }
+
+        [Column(TypeName = "decimal(10, 2)")]
+        public decimal Day { get; set; }
+
+        [Column(TypeName = "decimal(10, 2)")]
+        public decimal Week { get; set; }
+
+
         public ICollection<CarExtra> CarExtras { get; set; } = null!;
     }
 }
