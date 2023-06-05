@@ -1,6 +1,7 @@
 using JWT;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using VehicleCatalogAPI.Mapping;
 using VehicleCatalogAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,6 +32,8 @@ try
         builder.ClearProviders();
         builder.AddSerilog(dispose: true);
     });
+
+    builder.Services.AddAutoMapper(typeof(MappingProfile));
 
     var app = builder.Build();
 
