@@ -18,6 +18,8 @@ namespace VehicleCatalogAPI.Models
             modelBuilder.Entity<CarExtra>().HasKey(ce => new { ce.CarId, ce.ExtraId });
 
             modelBuilder.ApplyConfiguration(new CarConfiguration());
+            modelBuilder.ApplyConfiguration(new ExtraConfiguration());
+            modelBuilder.ApplyConfiguration(new CarExtraConfiguration());
         }
     }
 }
