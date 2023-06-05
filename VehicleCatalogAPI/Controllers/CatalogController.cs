@@ -12,6 +12,12 @@ namespace VehicleCatalogAPI.Controllers
         private readonly ILogger<CatalogController> _logger;
         private readonly ApplicationDbContext _context;
 
+        public CatalogController(ILogger<CatalogController> logger, ApplicationDbContext context)
+        {
+            _logger = logger;
+            _context = context;
+        }
+
         [HttpGet]
         public IActionResult GetVehicles()
         {
