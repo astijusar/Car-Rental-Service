@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using VehicleCatalogAPI.Mapping;
 using VehicleCatalogAPI.Models;
+using VehicleCatalogAPI.Repository;
+using VehicleCatalogAPI.Repository.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +36,8 @@ try
     });
 
     builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+    builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 
     var app = builder.Build();
 
