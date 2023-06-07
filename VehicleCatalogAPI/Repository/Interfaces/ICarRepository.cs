@@ -5,7 +5,7 @@ namespace VehicleCatalogAPI.Repository.Interfaces
 {
     public interface ICarRepository
     {
-        Task<IEnumerable<Car>> GetCarsAsync(CarRequestParameters requestParameters, bool trackChanges);
-        Task<Car> GetCar(int carId, bool trackChanges);
+        Task<(IEnumerable<Car>, int totalCount)> GetCarsAsync(CarRequestParameters requestParameters, bool trackChanges);
+        Task<Car> GetCarAsync(int carId, bool trackChanges);
     }
 }

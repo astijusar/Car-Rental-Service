@@ -10,10 +10,10 @@ namespace VehicleCatalogAPI.Models.DTOs
         public string Model { get; set; }
         public string Color { get; set; }
         public int Year { get; set; }
-        public CarType Type { get; set; }
+        public string Type { get; set; }
         public int Seats { get; set; }
         public int Doors { get; set; }
-        public Transmission Transmission { get; set; }
+        public string Transmission { get; set; }
         public double Power { get; set; }
         public bool Electric { get; set; }
         public decimal Hour { get; set; }

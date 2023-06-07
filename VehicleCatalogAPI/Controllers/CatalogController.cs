@@ -28,11 +28,22 @@ namespace VehicleCatalogAPI.Controllers
         [HttpGet("car")]
         public async Task<IActionResult> GetCars([FromQuery] CarRequestParameters requestParameters)
         {
-            var cars = await _repository.Car.GetCarsAsync(requestParameters, false);
+            var (cars, totalCount) = await _repository.Car.GetCarsAsync(requestParameters, false);
 
             var carsDto = _mapper.Map<IEnumerable<CarDto>>(cars);
+            var metadata = new MetaData(totalCount, requestParameters.PageNumber, requestParameters.PageSize);
 
-            return Ok(new { data = carsDto });
+            return Ok(new { data = carsDto, pagination = metadata });
+        }
+
+        [HttpGet("car/{carId}")]
+        public async Task<IActionResult> GetCar(int carId)
+        {
+            var car = await _repository.Car.GetCarAsync(carId, false);
+
+            var carDto = _mapper.Map<CarDto>(car);
+
+            return Ok(carDto);
         }
 
         /*[HttpGet("extra")]
