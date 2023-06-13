@@ -33,13 +33,24 @@ namespace VehicleCatalogAPI.Controllers
             var carsDto = _mapper.Map<IEnumerable<CarDto>>(cars);
             var metadata = new MetaData(totalCount, requestParameters.PageNumber, requestParameters.PageSize);
 
-            return Ok(new { data = carsDto, pagination = metadata });
+            var response = new
+            {
+                data = carsDto,
+                pagination = metadata
+            };
+
+            return Ok(response);
         }
 
         [HttpGet("car/{carId}")]
         public async Task<IActionResult> GetCar(int carId)
         {
             var car = await _repository.Car.GetCarAsync(carId, false);
+
+            if (car == null)
+            {
+                return NotFound($"Car with id: {carId} does not exist");
+            }
 
             var carDto = _mapper.Map<CarDto>(car);
 

@@ -31,7 +31,7 @@ jobs:
       - name: Clean up
         run: docker-compose down
         
-  run-xunit-tests:
+  run-IdentityAPI-tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -46,3 +46,19 @@ jobs:
         run: dotnet build IdentityAPI.Tests/IdentityAPI.Tests.csproj --configuration Release --no-restore
       - name: Run IdentityAPI unit tests
         run: dotnet test --no-build --configuration Release IdentityAPI.Tests/IdentityAPI.Tests.csproj
+        
+  run-VehicleCatalogAPI-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.x'
+      - name: Restore dependencies
+        run: dotnet restore VehicleCatalogAPI.Tests/VehicleCatalogAPI.Tests.csproj
+      - name: Build project
+        run: dotnet build VehicleCatalogAPI.Tests/VehicleCatalogAPI.Tests.csproj --configuration Release --no-restore
+      - name: Run VehicleCatalogAPI unit tests
+        run: dotnet test --no-build --configuration Release VehicleCatalogAPI.Tests/VehicleCatalogAPI.Tests.csproj
